@@ -1,18 +1,16 @@
 package org.example.passenger;
 
+import org.example.seat.Seat;
 import org.example.space.Pluto;
 
 public abstract class Passenger {
-    private final String ID;
     private final String name;
-    public Passenger(String id, String name){
-        this.ID = id;
+    private boolean hasBookedSeat;
+    private Seat passengerSeat;
+    public Passenger(String name){
         this.name = name;
         }
 
-    public String getID() {
-        return ID;
-    }
 
     public String getName() {
         return name;
@@ -25,6 +23,12 @@ public abstract class Passenger {
 
     public abstract String plutoBelief(Pluto pluto);
 
+    public Seat getPassengerSeat() {
+        return passengerSeat;
+    }
 
+    public void setPassengerSeat(Seat passengerSeat) {
+        this.passengerSeat = passengerSeat;
+    }
 }
 

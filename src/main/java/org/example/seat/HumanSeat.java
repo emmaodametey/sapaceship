@@ -4,17 +4,17 @@ import org.example.passenger.Passenger;
 
 public class HumanSeat extends Seat{
 
-    public HumanSeat(Passenger passenger) {
-        super(passenger);
+    public HumanSeat(int id) {
+        super(id);
     }
 
     @Override
-    protected void serveMeal() {
-        System.out.println("serve human meal");
+    public String serveMeal() {
+        return "Human meal";
     }
 
     @Override
     public String toString() {
-        return "HumanSeat";
+        return "Human Seat";
     }
 }

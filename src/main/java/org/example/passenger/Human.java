@@ -3,8 +3,8 @@ package org.example.passenger;
 import org.example.space.Pluto;
 
 public class Human extends Passenger {
-    public Human(String id, String name) {
-        super(id, name);
+    public Human(String name) {
+        super(name);
     }
 
     @Override

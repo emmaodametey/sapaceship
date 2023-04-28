@@ -3,23 +3,61 @@ package org.example;
 import org.example.passenger.Human;
 import org.example.passenger.Martian;
 import org.example.passenger.Passenger;
+import org.example.seat.HumanSeat;
+import org.example.seat.Seat;
 import org.example.space.Pluto;
 import org.example.spaceship.Spaceship;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args){
-        Passenger human = new Human("123", "Emma");
-        Passenger martian = new Martian("1243", "Ekow");
-        Spaceship zura = new Spaceship(1);
+        Passenger human1 = new Human( "Emma");
+        Passenger human2 = new Human( "Rose");
+        Passenger human3 = new Human( "Judah");
+        Passenger human4 = new Human( "Ana");
+        Passenger martian1 = new Martian("Ekow");
+        Passenger martian2 = new Martian("Debbie");
+        Passenger martian3 = new Martian("Elisha");
 
-        zura.bookSeat(martian);
+        List<Passenger> passengers = new ArrayList<>();
+        passengers.add(human1);
+        passengers.add(human2);
+        passengers.add(human3);
+        passengers.add(human4);
+        passengers.add(human4);
+        passengers.add(human4);
+        passengers.add(martian1);
+        passengers.add(martian2);
+        passengers.add(martian3);
 
-        System.out.println("the seat booked for " + martian + " is "+ zura.getSeatType(martian));
-        zura.bookSeat(human);
-        System.out.println("the seat booked for " + human + " is "+ zura.getSeatType(human));
-        Pluto pluto = new Pluto();
+        Spaceship zura = new Spaceship(5,3);
 
-        System.out.println(human.plutoBelief(pluto));
+        for(Passenger passenger : passengers){
+            zura.book(passenger);
+            System.out.println("the seat booked for " + passenger + " is "+ zura.getSeatType(passenger));
+        }
+        zura.book(martian1);
+//        System.out.println(zura.getSeatType(martian1).getID());
+//        for(Seat seat : zura.getSeats()){
+//            System.out.println("the meal served to " +  seat + " is " + seat.serveMeal());
+//        }
+
+
+//        System.out.println("the seat booked for " + martian + " is "+ zura.getSeatType(martian));
+//        zura.bookSeat(human);
+//        System.out.println("the seat booked for " + human + " is "+ zura.getSeatType(human));
+//        Seat seat = zura.getSeatType(human);
+//        System.out.println("the meal served to " + seat + " is " + seat.serveMeal());
+
+
+
+
+//        Pluto pluto = new Pluto();
+
+//        System.out.println(human.plutoBelief(pluto));
+
 
 
     }

@@ -13,32 +13,70 @@ import java.util.List;
 public class Spaceship {
     private List<Seat> seats;
     private final int capacity;
+    private final int humancapacity;
+    private final int martiancapacity;
+    private int nextFreeSeatForHuman;
+    private int nextFreeSeatForMartian;
 
-    public Spaceship(int capacity){
-        this.capacity = capacity;
-        seats = new ArrayList<>(capacity);
+    public Spaceship(int humancapacity, int martiancapacity){
+        this.capacity = humancapacity + martiancapacity;
+        this.humancapacity = humancapacity;
+        this.martiancapacity = martiancapacity;
+        createSpaceshipSeats();
+        nextFreeSeatForMartian = humancapacity;
     }
 
-    public void bookSeat(Passenger passenger){
-        if(seats.size() < capacity){
-            if(passenger instanceof Human){
-                Seat newHumanSeat = new HumanSeat(passenger);
-                newHumanSeat.setBooked(true);
-                seats.add(newHumanSeat);
-            }
-            else if (passenger instanceof Martian) {
-                Seat newMartianSeat = new MartianSeat(passenger);
-                newMartianSeat.setBooked(true);
-                seats.add(newMartianSeat);
-            }
-        }else{
-            System.out.println("spaceship full ");
+    private void createSpaceshipSeats(){
+        seats = new ArrayList<>(capacity);
+        for(int i = 0; i < humancapacity; i++){
+            seats.add(new HumanSeat(i));
+
+        }
+
+        for(int i = humancapacity; i < capacity; i++){
+            seats.add(new MartianSeat(i));
+
         }
     }
 
+    public void bookSeat(Passenger passenger) {
+        for (Seat seat : seats) {
+            if (passenger instanceof Human && seat instanceof HumanSeat ) {
+                seat.setPassenger(passenger);
+                seat.setBooked(true);
+            } else if (passenger instanceof Martian && seat instanceof MartianSeat) {
+                seat.setPassenger(passenger);
+                seat.setBooked(true);
+            }
+        }
+    }
+    public void book(Passenger passenger) {
+        if (passenger instanceof Human ){
+            if(nextFreeSeatForHuman < humancapacity){
+                seats.get(nextFreeSeatForHuman).setPassenger(passenger);
+                nextFreeSeatForHuman ++;}
+            else{
+                System.out.println("plane full for humans");
+            }
+        }
+        if (passenger instanceof Martian ){
+
+            if(nextFreeSeatForMartian < capacity){
+                seats.get(nextFreeSeatForMartian).setPassenger(passenger);
+                nextFreeSeatForMartian ++;
+            }
+            else{
+                System.out.println("spaceship full for martians");
+            }
+
+        }
+    }
+
+
+
     public Seat getSeatType(Passenger passenger){
         for(Seat seat: seats){
-            if(seat.getPassenger().getID() == passenger.getID()){
+            if(seat.getPassenger() == passenger){
                 return seat;
             }
         }
@@ -52,4 +90,13 @@ public class Spaceship {
     public int getCapacity() {
         return capacity;
     }
+
+    public List<Passenger> flightlist(){
+        List <Passenger> flightlist = new ArrayList();
+        for(Seat seat: seats){
+           if(seat.getBooked()) flightlist.add(seat.getPassenger());
+        }
+        return flightlist;
+    }
+
 }

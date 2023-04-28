@@ -4,14 +4,17 @@ import org.example.passenger.Passenger;
 
 public abstract class Seat {
     private boolean booked;
+    private int ID;
     private Passenger passenger;
 
-    protected Seat(Passenger passenger){
-        this.passenger = passenger;
+
+    protected Seat(int ID){
+        this.ID = ID;
     }
 
-    protected abstract void serveMeal();
-    public boolean isBooked() {
+    public abstract String serveMeal();
+
+    public boolean getBooked() {
         return booked;
     }
 
@@ -21,5 +24,13 @@ public abstract class Seat {
 
     public Passenger getPassenger() {
         return passenger;
+    }
+
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
+    }
+
+    public int getID() {
+        return ID;
     }
 }
