@@ -26,9 +26,11 @@ class SpaceshipTest {
     }
 
     @Test
-    void bookIsSuccessfulTest() throws SpaceshipFullException {
+    void bookingIsSuccessfulTest() throws SpaceshipFullException {
         spaceship.book(human1);
         spaceship.book(martian2);
+        assertTrue(spaceship.getSeatType(0).getBooked());
+        assertTrue(spaceship.getSeatType(5).getBooked());
         assertEquals(8, spaceship.getAvailableSeats());
         Assertions.assertThat(spaceship.flightlistOfSpaceship()).contains(human1);
         Assertions.assertThat(spaceship.flightlistOfSpaceship()).contains(martian2);
@@ -45,6 +47,7 @@ class SpaceshipTest {
         assertEquals(5, spaceship.getAvailableSeats());
         assertEquals(5, spaceship.flightlistOfSpaceship().size());
         Assertions.assertThat(spaceship.flightlistOfSpaceship()).doesNotContain(martian2);
+        assertFalse(spaceship.getSeatType(0).getBooked());
 
     }
 
@@ -58,6 +61,7 @@ class SpaceshipTest {
         assertEquals(4, spaceship.getAvailableSeats());
         assertEquals(6, spaceship.flightlistOfSpaceship().size());
         Assertions.assertThat(spaceship.flightlistOfSpaceship()).doesNotContain(human2);
+        assertTrue(spaceship.getSeatType(0).getBooked());
 
     }
 

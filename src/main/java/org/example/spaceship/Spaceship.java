@@ -33,12 +33,12 @@ public class Spaceship {
     private void createSpaceshipSeats(){
         seats = new ArrayList<>(capacity);
         for(int i = 0; i < humanCapacity; i++){
-            seats.add(new HumanSeat(i+1));
+            seats.add(new HumanSeat(i));
 
         }
 
         for(int i = humanCapacity; i < capacity; i++){
-            seats.add(new MartianSeat(i+1));
+            seats.add(new MartianSeat(i));
 
         }
     }
@@ -71,6 +71,13 @@ public class Spaceship {
             }
         }
         return null;
+    }
+    public Seat getSeatType(int id){
+        try{
+            return seats.get(id);
+        }catch(NullPointerException e){
+            throw new NullPointerException("SEAT NOT FOUND");
+        }
     }
 
     public List<Seat> getSeats() {
