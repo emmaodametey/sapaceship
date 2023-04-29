@@ -13,8 +13,13 @@ public class Martian extends Passenger {
     }
 
     @Override
-    public String plutoBelief(Pluto pluto) {
-        return pluto + "is a planet";
+    public Pluto plutoBelief() {
+        return Pluto.PLANET;
+    }
+
+    @Override
+    public String alienSpecie() {
+        return "Martians";
     }
 
 

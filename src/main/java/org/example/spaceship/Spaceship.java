@@ -13,63 +13,53 @@ import java.util.List;
 public class Spaceship {
     private List<Seat> seats;
     private final int capacity;
-    private final int humancapacity;
-    private final int martiancapacity;
+    private final int humanCapacity;
+    private final int martianCapacity;
     private int nextFreeSeatForHuman;
     private int nextFreeSeatForMartian;
+    private int availableSeats;
+    private List<Passenger> flightList;
 
-    public Spaceship(int humancapacity, int martiancapacity){
-        this.capacity = humancapacity + martiancapacity;
-        this.humancapacity = humancapacity;
-        this.martiancapacity = martiancapacity;
+    public Spaceship(int humanCapacity, int martianCapacity){
+        this.capacity = humanCapacity + martianCapacity;
+        this.humanCapacity = humanCapacity;
+        this.martianCapacity = martianCapacity;
         createSpaceshipSeats();
-        nextFreeSeatForMartian = humancapacity;
+        availableSeats = capacity;
+        nextFreeSeatForMartian = humanCapacity;
+        flightList = new ArrayList<>();
     }
 
     private void createSpaceshipSeats(){
         seats = new ArrayList<>(capacity);
-        for(int i = 0; i < humancapacity; i++){
-            seats.add(new HumanSeat(i));
+        for(int i = 0; i < humanCapacity; i++){
+            seats.add(new HumanSeat(i+1));
 
         }
 
-        for(int i = humancapacity; i < capacity; i++){
-            seats.add(new MartianSeat(i));
+        for(int i = humanCapacity; i < capacity; i++){
+            seats.add(new MartianSeat(i+1));
 
-        }
-    }
-
-    public void bookSeat(Passenger passenger) {
-        for (Seat seat : seats) {
-            if (passenger instanceof Human && seat instanceof HumanSeat ) {
-                seat.setPassenger(passenger);
-                seat.setBooked(true);
-            } else if (passenger instanceof Martian && seat instanceof MartianSeat) {
-                seat.setPassenger(passenger);
-                seat.setBooked(true);
-            }
         }
     }
-    public void book(Passenger passenger) {
-        if (passenger instanceof Human ){
-            if(nextFreeSeatForHuman < humancapacity){
+
+
+    public void book(Passenger passenger) throws SpaceshipFullException {
+        if (passenger instanceof Human && nextFreeSeatForHuman < humanCapacity ){
                 seats.get(nextFreeSeatForHuman).setPassenger(passenger);
-                nextFreeSeatForHuman ++;}
-            else{
-                System.out.println("plane full for humans");
-            }
+                seats.get(nextFreeSeatForHuman).setBooked(true);
+                nextFreeSeatForHuman ++;
         }
-        if (passenger instanceof Martian ){
-
-            if(nextFreeSeatForMartian < capacity){
+        else if (passenger instanceof Martian && nextFreeSeatForMartian < capacity ){
                 seats.get(nextFreeSeatForMartian).setPassenger(passenger);
+                seats.get(nextFreeSeatForMartian).setBooked(true);
                 nextFreeSeatForMartian ++;
-            }
-            else{
-                System.out.println("spaceship full for martians");
-            }
-
         }
+        else{
+            throw new SpaceshipFullException("Spaceship at capacity for " + passenger.alienSpecie());
+        }
+        flightList.add(passenger);
+        availableSeats--;
     }
 
 
@@ -87,16 +77,24 @@ public class Spaceship {
         return seats;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public int getAvailableSeats() {
+        return availableSeats;
     }
 
-    public List<Passenger> flightlist(){
-        List <Passenger> flightlist = new ArrayList();
-        for(Seat seat: seats){
-           if(seat.getBooked()) flightlist.add(seat.getPassenger());
+    public List<Passenger> flightlistOfSpaceship(){
+        return flightList;
+    }
+
+    public String serveMeal(Seat seat) throws SeatIsEmptyException {
+        try{
+            if(seat.getBooked()){
+                return seat.serveMeal();
+            }
+        }catch (NullPointerException e){
+            throw new SeatIsEmptyException("Passenger not on flight or seat does not exist");
         }
-        return flightlist;
+
+        throw new SeatIsEmptyException("Cannot serve meal to an Empty seat");
     }
 
 }

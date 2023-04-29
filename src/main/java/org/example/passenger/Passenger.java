@@ -7,7 +7,7 @@ public abstract class Passenger {
     private final String name;
     private boolean hasBookedSeat;
     private Seat passengerSeat;
-    public Passenger(String name){
+    protected Passenger(String name){
         this.name = name;
         }
 
@@ -21,7 +21,7 @@ public abstract class Passenger {
         return "Passenger " + name;
     }
 
-    public abstract String plutoBelief(Pluto pluto);
+    public abstract Pluto plutoBelief();
 
     public Seat getPassengerSeat() {
         return passengerSeat;
@@ -30,5 +30,6 @@ public abstract class Passenger {
     public void setPassengerSeat(Seat passengerSeat) {
         this.passengerSeat = passengerSeat;
     }
+    public abstract String alienSpecie();
 }
 

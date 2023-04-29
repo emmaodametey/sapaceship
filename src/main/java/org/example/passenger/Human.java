@@ -12,9 +12,12 @@ public class Human extends Passenger {
         return "Human " + getName();
     }
 
+    public Pluto plutoBelief() {
+        return Pluto.MOON;
+    }
     @Override
-    public String plutoBelief(Pluto pluto) {
-        return pluto + "is a moon";
+    public String alienSpecie() {
+        return "Humans";
     }
 
 }

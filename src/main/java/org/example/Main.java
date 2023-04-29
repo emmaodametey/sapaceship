@@ -3,10 +3,7 @@ package org.example;
 import org.example.passenger.Human;
 import org.example.passenger.Martian;
 import org.example.passenger.Passenger;
-import org.example.seat.HumanSeat;
-import org.example.seat.Seat;
-import org.example.space.Pluto;
-import org.example.spaceship.Spaceship;
+import org.example.spaceship.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +32,20 @@ public class Main {
         Spaceship zura = new Spaceship(5,3);
 
         for(Passenger passenger : passengers){
-            zura.book(passenger);
+            try{
+                zura.book(passenger);
+            } catch (SpaceshipFullException h){
+                System.out.println(h.getMessage());
+            }
             System.out.println("the seat booked for " + passenger + " is "+ zura.getSeatType(passenger));
         }
-        zura.book(martian1);
+
+            try{
+                zura.book(martian1);
+            } catch (SpaceshipFullException h){
+                System.out.println(h.getMessage());
+            }
+
 //        System.out.println(zura.getSeatType(martian1).getID());
 //        for(Seat seat : zura.getSeats()){
 //            System.out.println("the meal served to " +  seat + " is " + seat.serveMeal());
